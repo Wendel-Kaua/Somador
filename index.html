@@ -88,6 +88,10 @@
             var n1 = Number(tn1.value) // converte valor do input 1 para número
             var n2 = Number(tn2.value) // converte valor do input 2 para número
             var s = n1 + n2 // realiza a soma
+            if (tn1.value === '' || tn2.value === '' ) { // se os dois campos estiverem 
+                res.innerText = 'Digite um valor valido' // vazios, ele retorna 'Digite um valor valido'
+                return // faz a função ser interrompida
+            }
 
             res.innerText = `${s}` // mostra resultado na tela
         }
