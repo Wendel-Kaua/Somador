@@ -7,14 +7,14 @@
 
     <style>
         #telas{
-            Display:flex;
+            display: flex;
             width:700px; /* Cada tela ocupa exatamente a largura da calculadora.*/
 
-            transition:transform 1s ease;
+            transition:transform 1s ease; /* Cria uma animação suave ao trocar de tela */
         }
         .tela {
             width:350px; /* deixa as duas 'telas' com a mesma largura. */
-            flex-shrink:0;
+            flex-shrink:0; /* Impede que a tela diminua de tamanho dentro do Flexbox */
         }
         p {
             font: normal 20pt Arial; /* Define fonte dos parágrafos */
@@ -62,7 +62,7 @@
             border-radius: 15px; /* Bordas arredondadas */
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.591); /* Sombra ao redor */
             width:350px; /* A calculadora "corta" o que sai para fora. */
-            overflow:hidden;
+            overflow:hidden; /* Esconde qualquer conteúdo que ultrapasse os limites da calculadora */
         }
 
         #button {
@@ -119,15 +119,15 @@
         var tn1 = document.getElementById('txtn1') // pega input do primeiro número
         var tn2 = document.getElementById('txtn2') // pega input do segundo número
 
-        var td1 = document.getElementById('txtd1')
-        var td2 = document.getElementById('txtd2')
-        var resDiv = document.getElementById('resDiv')
+        var td1 = document.getElementById('txtd1') // Obtém o primeiro campo da divisão
+        var td2 = document.getElementById('txtd2') // obtém o segundo campo da divisão
+        var resDiv = document.getElementById('resDiv') // Obtém a caixa onde será exibido o resultado da divisão
 
         function somar(){ // função que realiza a soma
             var n1 = Number(tn1.value) // converte valor do input 1 para número
             var n2 = Number(tn2.value) // converte valor do input 2 para número
             var s = n1 + n2 // realiza a soma
-            if (tn1.value === '' || tn2.value === '' ) { // se os dois campos estiverem 
+            if (tn1.value === '' || tn2.value === '' ) { // se um dois campos estiverem 
                 res.innerText = 'Digite um valor valido' // vazios, ele retorna 'Digite um valor valido'
                 return // faz a função ser interrompida
             }
@@ -142,25 +142,28 @@
             tn1.focus() // coloca o cursor automaticamente no primeiro campo
         }
 
-        const telas = document.getElementById("telas");
+        const telas = document.getElementById("telas"); // Seleciona o contêiner que possui todas as telas da calculadora
 
-        function mudarTela(){
+        function mudarTela(){ // Move o contêiner para a esquerda, exibindo a tela de divisão
             telas.style.transform = "translateX(-350px)";
         }
 
-        function voltarTela(){
+        function voltarTela(){ // Retorna o contêiner para a posição inicial, exibindo novamente a tela de soma
             telas.style.transform = "translateX(0)";
         }
 
-        function dividir() {
-            var nd1 = Number(td1.value)
-            var nd2 = Number(td2.value)
-            var r = nd1 / nd2
-            if (td1.value === '' || td2.value === '') {
-                resDiv.innerText = 'Digite um valor valido'
-                return
+        function dividir() { // Função responsável por realizar a divisão
+            var nd1 = Number(td1.value) // Converte o primeiro valor para número
+            var nd2 = Number(td2.value) // Converte o segundo valor para número
+            var r = nd1 / nd2 // Calcula o resultado da divisão
+            if (td1.value === '' || td2.value === '') { // Verifica se algum campo está vazio
+                resDiv.innerText = 'Digite um valor valido' // Exibe uma mensagem de erro
+                return // Encerra a função para evitar o cálculo
             }
-            resDiv.innerText = `${r}`
+
+            // Futuramente pode ser adicionada uma verificação para impedir divisão por zero.
+            
+            resDiv.innerText = `${r}` // Exibe o resultado da divisão
         }
         function limparDivisao(){ // função para limpar campos
             resDiv.innerHTML = 'Resultado' // volta texto original do resultado
