@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br"> <!-- Define o idioma da página como português do Brasil -->
+<head>
+    <meta charset="UTF-8"> <!-- Define codificação de caracteres (acentos e símbolos) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Faz o site ser responsivo -->
+    <title>Somador</title> <!-- Título da aba do navegador -->
+
+    <style>
+        p {
+            font: normal 20pt Arial; /* Define fonte dos parágrafos */
+        }
+
+        body {
+            background-color: rgb(143, 255, 231); /* Cor de fundo da página */
+        }
+
+        #titulo {
+            border-radius: 10px; /* Adiciona uma borda de 10px*/
+            text-align: center; /* Centraliza o texto */
+            height: 40px; /* Altura do elemento */
+            background-color: rgb(0, 255, 225); /* Cor de fundo do título */
+            margin: 29px; /* Espaço externo ao redor */
+            margin-top: 10px; /* adiciona um espaço de 10px acima do elemento, empurrando ele para baixo */
+        }
+
+        input {
+            font: normal 15pt Arial; /* Fonte dos inputs */
+            border-radius: 10px; /* Bordas arredondadas */
+            border: 2px solid black; /* Borda preta */
+        }
+
+        #res {
+            width: 220px; /* Largura da caixa de resultado */
+            height: 35px; /* Altura da caixa */
+            margin: 15px auto; /* Centraliza horizontalmente e dá espaçamento */
+            padding: 8px; /* Espaço interno */
+            border: 2px solid black; /* Borda da caixa */
+            border-radius: 10px; /* Cantos arredondados */
+            background-color: white; /* Fundo branco */
+            font: normal 15pt Arial; /* Fonte do texto */
+            text-align: center; /* Centraliza texto horizontalmente */
+            line-height: 35px; /* Centraliza texto verticalmente */
+        }
+
+        #calculadora {
+            text-align: center; /* Centraliza conteúdo interno */
+            width: 350px; /* Largura da calculadora */
+            margin: 55px auto; /* Centraliza na tela e dá espaço em cima/baixo */
+            background-color: white; /* Fundo branco */
+            padding: 20px; /* Espaço interno */
+            border-radius: 15px; /* Bordas arredondadas */
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.2); /* Sombra ao redor */
+        }
+
+        #button {
+            text-align: center; /* Centraliza os botões */
+            margin-top: 20px; /* Espaço acima dos botões */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="calculadora"> <!-- Caixa principal da calculadora -->
+
+        <h1 id="titulo">Somador</h1> <!-- Título principal -->
+
+        <div id="box"></div> <!-- Div vazia (não está sendo usada ainda) -->
+
+        <input type="number" name="txtn1" id="txtn1">  <!-- Primeiro número -->
+        <p>+</p> <!-- Símbolo de soma -->
+        <input type="number" name="txtn2" id="txtn2"> <!-- Segundo número -->
+
+        <div id="button">
+            <input type="button" value="Somar" onclick="somar()"> <!-- Botão que chama função somar -->
+            <input type="button" value="Limpar" onclick="limpar()"> <!-- Botão que chama função limpar -->
+        </div>
+
+        <div id="res">Resultado</div> <!-- Área onde aparece o resultado -->
+
+    </div>
+
+    <script>
+        var res = document.getElementById('res') // pega a div do resultado
+        var tn1 = document.getElementById('txtn1') // pega input do primeiro número
+        var tn2 = document.getElementById('txtn2') // pega input do segundo número
+
+        function somar(){ // função que realiza a soma
+            var n1 = Number(tn1.value) // converte valor do input 1 para número
+            var n2 = Number(tn2.value) // converte valor do input 2 para número
+            var s = n1 + n2 // realiza a soma
+
+            res.innerText = `O resultado da soma de ${n1} + ${n2} é = ${s}` // mostra resultado na tela
+        }
+
+        function limpar(){ // função para limpar campos
+            res.innerHTML = 'Resultado' // volta texto original do resultado
+            tn1.value = '' // limpa input 1
+            tn2.value = '' // limpa input 2
+            tn1.focus() // coloca o cursor automaticamente no primeiro campo
+        }
+    </script>
+</body>
+</html>
