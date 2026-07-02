@@ -6,6 +6,16 @@
     <title>Somador</title> <!-- Título da aba do navegador -->
 
     <style>
+        #telas{
+            Display:flex;
+            width:700px; /* Cada tela ocupa exatamente a largura da calculadora.*/
+
+            transition:transform 1s ease;
+        }
+        .tela {
+            width:350px; /* deixa as duas 'telas' com a mesma largura. */
+            flex-shrink:0;
+        }
         p {
             font: normal 20pt Arial; /* Define fonte dos parágrafos */
         }
@@ -30,7 +40,7 @@
             border: 2px solid black; /* Borda preta */
         }
 
-        #res {
+        #res, #resDiv {
             width: 220px; /* Largura da caixa de resultado */
             height: 35px; /* Altura da caixa */
             margin: 15px auto; /* Centraliza horizontalmente e dá espaçamento */
@@ -51,6 +61,8 @@
             padding: 20px; /* Espaço interno */
             border-radius: 15px; /* Bordas arredondadas */
             box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.591); /* Sombra ao redor */
+            width:350px; /* A calculadora "corta" o que sai para fora. */
+            overflow:hidden;
         }
 
         #button {
@@ -61,29 +73,55 @@
 </head>
 
 <body>
-    <div id="calculadora"> <!-- Caixa principal da calculadora -->
-
-        <h1 id="titulo">Somador</h1> <!-- Título principal -->
-
-        <div id="box"></div> <!-- Div vazia (não está sendo usada ainda) -->
-
-        <input type="number" name="txtn1" id="txtn1">  <!-- Primeiro número -->
-        <p>+</p> <!-- Símbolo de soma -->
-        <input type="number" name="txtn2" id="txtn2"> <!-- Segundo número -->
-
-        <div id="button">
-            <input type="button" value="Somar" onclick="somar()"> <!-- Botão que chama função somar -->
-            <input type="button" value="Limpar" onclick="limpar()"> <!-- Botão que chama função limpar -->
+<div id="calculadora"> <!-- Caixa principal da calculadora -->
+    <div id="telas"> <!-- Contém todas as telas da calculadora -->
+        <!-- ================= TELA 1 - SOMA ================= -->
+        <div class="tela"> <!-- Primeira tela (Somador) -->
+            <h1 id="titulo">Somador</h1> <!-- Título da tela -->
+            <input type="number" name="txtn1" id="txtn1"> <!-- Primeiro número -->
+            <p>+</p> <!-- Símbolo da operação -->
+            <input type="number" name="txtn2" id="txtn2"> <!-- Segundo número -->
+            <div id="button"> <!-- Agrupa os botões -->
+                <input type="button" value="Somar" onclick="somar()">
+                <!-- Executa a função que realiza a soma -->
+                <input type="button" value="Divisão" onclick="mudarTela()">
+                <!-- Troca para a tela de divisão -->
+                <input type="button" value="Limpar" onclick="limpar()">
+                <!-- Limpa os campos da tela de soma -->
+            </div>
+            <div id="res">Resultado</div>
+            <!-- Exibe o resultado da soma -->
         </div>
-
-        <div id="res">Resultado</div> <!-- Área onde aparece o resultado -->
-
+        <!-- ================= TELA 2 - DIVISÃO ================= -->
+        <div class="tela"> <!-- Segunda tela (Divisão) -->
+            <h1 id="titulo">Divisão</h1> <!-- Título da tela -->
+            <input type="number" name="txtd1" id="txtd1">
+            <!-- Primeiro número da divisão -->
+            <p>÷</p> <!-- Símbolo da divisão -->
+            <input type="number" name="txtd2" id="txtd2">
+            <!-- Segundo número da divisão -->
+            <div id="button"> <!-- Agrupa os botões -->
+                <input type="button" value="Dividir" onclick="dividir()">
+                <!-- Executa a função de divisão -->
+                <input type="button" value="Somador" onclick="voltarTela()">
+                <!-- Retorna para a tela de soma -->
+                <input type="button" value="Limpar" onclick="limparDivisao()">
+                <!-- Limpa os campos da tela de divisão -->
+            </div>
+            <div id="resDiv">Resultado</div>
+            <!-- Exibe o resultado da divisão -->
+        </div>
     </div>
+</div>
 
     <script>
         var res = document.getElementById('res') // pega a div do resultado
         var tn1 = document.getElementById('txtn1') // pega input do primeiro número
         var tn2 = document.getElementById('txtn2') // pega input do segundo número
+
+        var td1 = document.getElementById('txtd1')
+        var td2 = document.getElementById('txtd2')
+        var resDiv = document.getElementById('resDiv')
 
         function somar(){ // função que realiza a soma
             var n1 = Number(tn1.value) // converte valor do input 1 para número
@@ -102,6 +140,33 @@
             tn1.value = '' // limpa input 1
             tn2.value = '' // limpa input 2
             tn1.focus() // coloca o cursor automaticamente no primeiro campo
+        }
+
+        const telas = document.getElementById("telas");
+
+        function mudarTela(){
+            telas.style.transform = "translateX(-350px)";
+        }
+
+        function voltarTela(){
+            telas.style.transform = "translateX(0)";
+        }
+
+        function dividir() {
+            var nd1 = Number(td1.value)
+            var nd2 = Number(td2.value)
+            var r = nd1 / nd2
+            if (td1.value === '' || td2.value === '') {
+                resDiv.innerText = 'Digite um valor valido'
+                return
+            }
+            resDiv.innerText = `${r}`
+        }
+        function limparDivisao(){ // função para limpar campos
+            resDiv.innerHTML = 'Resultado' // volta texto original do resultado
+            td1.value = '' // limpa input 1
+            td2.value = '' // limpa input 2
+            td1.focus() // coloca o cursor automaticamente no primeiro campo
         }
     </script>
 </body>
